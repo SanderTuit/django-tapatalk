@@ -90,11 +90,11 @@ def topic_as_tapatalk(self):
 def post_as_tapatalk(self):
     avatar = get_avatar_for_user(self.user)
 
-    attachments = self.attachments.all()
-    self.attachments = []
-    for attachment in attachments:
+    post_aattachments = self.attachments.all()
+    attachments = []
+    for attachment in post_attachments:
         attachment = attachment.as_tapatalk()
-        self.attachments.append(attachment)
+        attachments.append(attachment)
 
     # try to get online status
     online = cache.get('djangobb_user%d' % self.user.id)
@@ -120,7 +120,7 @@ def post_as_tapatalk(self):
         'post_time': xmlrpclib.DateTime(str(self.created.isoformat().replace('-','') + '+01:00')),
         'is_approved': True,
         'icon_url': avatar,
-        'attachments': self.attachments,
+        'attachments': attachments,
         'is_online': online,
         'reply_number': str(self.topic.post_count),
         'view_count': str(self.topic.views),
