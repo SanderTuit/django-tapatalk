@@ -79,7 +79,7 @@ def topic_as_tapatalk(self):
         'topic_title': xmlrpclib.Binary(smart_unicode(self.name).encode('utf-8')),
         'prefix': '',
         'icon_url': avatar,
-        'reply_number': self.post_count,
+        'reply_number': max(0,self.post_count),
         'view_number': str(self.views),
         'can_post': can_post,
         'is_approved': True,
