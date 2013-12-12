@@ -32,6 +32,22 @@ def get_avatar_for_user(user):
 
     return avatar
 
+def attachment_as_tapatalk(self):
+    name = self.name.lower()
+    content_type = "other"
+    if name.endswith(".png") or name.endswith(".gif") or name.endswith(".jpg") or name.endswith(".jpeg"):
+        content_type = "image"
+    elif name.endswith(".pdf")
+        content_type = "pdf"
+
+    data = {
+        'content_type': content_type,
+        'url': self.get_absolute_url,
+    }
+
+    if content_type == "image":
+        data['thumbnail_url'] = self.get_absolute_url
+    return data
 
 def topic_as_tapatalk(self):
     try:
@@ -41,6 +57,12 @@ def topic_as_tapatalk(self):
 
     avatar = get_avatar_for_user(user)
     can_post = not self.closed
+
+    attachments = self.attachments.all()
+    self.attachments = []
+    for attachment in attachments:
+        attachment = attachment.as_tapatalk()
+        self.attachments.append(attachment)
 
     data = {
         'forum_id': str(self.forum.id),
@@ -53,6 +75,7 @@ def topic_as_tapatalk(self):
         'view_number': str(self.views),
         'can_post': can_post,
         'is_approved': True,
+        'attachments': self.attachments,
         'topic_author_id': str(user.id),
         'topic_author_name': xmlrpclib.Binary(user.username.encode('utf-8')),
         'closed': self.closed,
@@ -144,3 +167,4 @@ def message_as_tapatalk(self):
 Topic.as_tapatalk = topic_as_tapatalk
 Post.as_tapatalk = post_as_tapatalk
 Message.as_tapatalk = message_as_tapatalk
+Attachment.as_tapatalk = attachment_as_tapatalk
