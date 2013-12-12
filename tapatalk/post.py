@@ -9,7 +9,7 @@ def get_thread(request, topic_id, start_num, last_num, return_html=True):
         topic.update_read(request.user)
 
     data = {
-        'total_post_num': topic.post_count,
+        'total_post_num': max(0,topic.post_count),
         'forum_id': str(topic.forum.id),
         'forum_title': xmlrpclib.Binary(smart_unicode(topic.forum.name).encode("utf-8")),
         'topic_id': str(topic.id),
