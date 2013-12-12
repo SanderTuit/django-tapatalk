@@ -24,7 +24,7 @@ def get_avatar_for_user(user):
     # fix this to correct call from django_bb
     avatar = None
     try:
-        avatar = get_primary_avatar(user, size=72):
+        avatar = get_primary_avatar(user, size=72)
     except:
         pass
 
