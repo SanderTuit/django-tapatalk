@@ -1,5 +1,6 @@
 from djangobb_forum.models import *
 import xmlrpclib
+from django.utils.encoding import smart_unicode
 
 def get_thread(request, topic_id, start_num, last_num, return_html=True):
     topic = Topic.objects.get(pk=topic_id)
@@ -10,9 +11,9 @@ def get_thread(request, topic_id, start_num, last_num, return_html=True):
     data = {
         'total_post_num': topic.post_count,
         'forum_id': str(topic.forum.id),
-        'forum_title': xmlrpclib.Binary(topic.forum.name),
+        'forum_title': xmlrpclib.Binary(smart_unicode(topic.forum.name).encode("utf-8")),
         'topic_id': str(topic.id),
-        'topic_title': xmlrpclib.Binary(topic.name),
+        'topic_title': xmlrpclib.Binary(smart_unicode(topic.name).encode("utf-8")),
         'can_reply': True,
         'posts': [],
         'is_approved': True,
