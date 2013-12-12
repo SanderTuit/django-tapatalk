@@ -90,7 +90,7 @@ def topic_as_tapatalk(self):
 def post_as_tapatalk(self):
     avatar = get_avatar_for_user(self.user)
 
-    post_aattachments = self.attachments.all()
+    post_attachments = self.attachments.all()
     attachments = []
     for attachment in post_attachments:
         attachment = attachment.as_tapatalk()
