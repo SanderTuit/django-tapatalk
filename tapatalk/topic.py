@@ -98,7 +98,6 @@ def get_participated_topic(request, user_name='', start_num=0, last_num=None, se
         'total_topic_num': len(topics),
         'topics': topic_set,
     }
-    print data
     return data
 
 
@@ -120,8 +119,7 @@ def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
             topics = topics[start_num:last_num + 1]
     else:
         topics = topics[start_num]
-    for t in topics:
-        data['topics'].append(t.as_tapatalk())
+    
 
     data = {
         'total_topic_num': forum.topic_count,
@@ -132,6 +130,9 @@ def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
         'require_prefix': False,
         'topics': [],
     }
+
+    for t in topics:
+        data['topics'].append(t.as_tapatalk())
 
     subscriptions = []
     if request.user.is_authenticated():
