@@ -80,7 +80,7 @@ def topic_as_tapatalk(self):
         'prefix': '',
         'icon_url': avatar,
         'reply_number': max(0,self.post_count),
-        'view_number': str(self.views),
+        'view_number': max(0,str(self.views)),
         'can_post': can_post,
         'is_approved': True,
         'topic_author_id': str(user.id),
