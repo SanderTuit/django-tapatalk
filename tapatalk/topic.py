@@ -47,7 +47,7 @@ def get_latest_topic(request, start_num=0, last_num=None, search_id='', filters=
     data['total_topic_num'] = 46819
 
     if start_num != 0 or last_num != 0:
-        topics = topics[start_num:last_num]
+        topics = topics[start_num:last_num + 1]
 
     for t in topics:
         data['topics'].append(t.as_tapatalk())
@@ -69,7 +69,7 @@ def get_participated_topic(request, user_name='', start_num=0, last_num=None, se
     topics = Topic.objects.filter(pk__in=tmp).filter(forum__category__groups__isnull=True)
 
     if start_num != 0 or last_num != 0:
-        topics = topics[start_num:last_num]
+        topics = topics[start_num:last_num + 1]
 
     topic_set = []
     for topic in topics:
@@ -93,7 +93,7 @@ def get_topic(request, forum_id, start_num=0, last_num=0, mode='DATE'):
         topics = topics.filter(sticky=True)
 
     if start_num != 0 or last_num != 0:
-        topics = topics[start_num:last_num]
+        topics = topics[start_num:last_num + 1]
 
     data = {
         'total_topic_num': forum.topic_count,
