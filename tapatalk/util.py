@@ -79,8 +79,8 @@ def topic_as_tapatalk(self):
         'topic_title': xmlrpclib.Binary(smart_unicode(self.name).encode('utf-8')),
         'prefix': '',
         'icon_url': avatar,
-        'reply_number': max(0,self.post_count),
-        'view_number': max(0,str(self.views)),
+        'reply_number': int(max(0,self.post_count)),
+        'view_number': int(max(0,str(self.views))),
         'can_post': can_post,
         'is_approved': True,
         'topic_author_id': str(user.id),
@@ -137,8 +137,8 @@ def post_as_tapatalk(self):
         'icon_url': avatar,
         'attachments': attachments,
         'is_online': online,
-        'reply_number': str(self.topic.post_count),
-        'view_count': str(self.topic.views),
+        'reply_number': int(self.topic.post_count),
+        'view_count': int(self.topic.views),
         # 'short_content': xmlrpclib.Binary(self.body_html[:100]),
     }
 
