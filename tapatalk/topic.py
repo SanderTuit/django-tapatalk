@@ -28,7 +28,7 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
 
     data['total_topic_num'] = 46819
 
-    if start_num == None && last_num == None:
+    if start_num == None and last_num == None:
         start_num = 0
         last_num = 19
 
@@ -55,7 +55,7 @@ def get_latest_topic(request, start_num=None, last_num=None, search_id='', filte
     data['total_topic_num'] = 46819
 
     
-    if start_num == None && last_num == None:
+    if start_num == None and last_num == None:
         start_num = 0
         last_num = 19
 
@@ -109,7 +109,7 @@ def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
     if mode == 'TOP':
         topics = topics.filter(sticky=True)
 
-    if start_num == None && last_num == None:
+    if start_num == None and last_num == None:
         start_num = 0
         last_num = 19
 
