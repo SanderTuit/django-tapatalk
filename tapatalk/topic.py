@@ -28,16 +28,24 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
 
     data['total_topic_num'] = 46819
 
-    if start_num != 0 or last_num != 0:
-        topics = topics[start_num:last_num]
+    if start_num == None && last_num == None:
+        start_num = 0
+        last_num = 19
 
-    for topic in topics:
-        data['topics'].append(topic.as_tapatalk())
+    if start_num != last_num:
+        if last_num - start_num > 50:
+            topics = topics[start_num:start_num + 50]
+        else: 
+            topics = topics[start_num:last_num + 1]
+    else:
+        topics = topics[start_num]
+    for t in topics:
+        data['topics'].append(t.as_tapatalk())
 
     return data
 
 
-def get_latest_topic(request, start_num=0, last_num=0, search_id='', filters=[]):
+def get_latest_topic(request, start_num=None, last_num=None, search_id='', filters=[]):
 
     data = {
         'result': True,
@@ -46,9 +54,18 @@ def get_latest_topic(request, start_num=0, last_num=0, search_id='', filters=[])
     topics = Topic.objects.filter(forum__category__groups__isnull=True)
     data['total_topic_num'] = 46819
 
-    if start_num != 0 or last_num != 0:
+    
+    if start_num == None && last_num == None:
+        start_num = 0
+        last_num = 19
+
+    if start_num != last_num:
         if last_num - start_num > 50:
             topics = topics[start_num:start_num + 50]
+        else: 
+            topics = topics[start_num:last_num + 1]
+    else:
+        topics = topics[start_num]
     for t in topics:
         data['topics'].append(t.as_tapatalk())
 
@@ -85,15 +102,26 @@ def get_participated_topic(request, user_name='', start_num=0, last_num=None, se
     return data
 
 
-def get_topic(request, forum_id, start_num=0, last_num=0, mode='DATE'):
+def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
     topics = Topic.objects.filter(forum_id=forum_id).filter(forum__category__groups__isnull=True)
     forum = Forum.objects.get(pk=forum_id)
 
     if mode == 'TOP':
         topics = topics.filter(sticky=True)
 
-    if start_num != 0 or last_num != 0:
-        topics = topics[start_num:last_num + 1]
+    if start_num == None && last_num == None:
+        start_num = 0
+        last_num = 19
+
+    if start_num != last_num:
+        if last_num - start_num > 50:
+            topics = topics[start_num:start_num + 50]
+        else: 
+            topics = topics[start_num:last_num + 1]
+    else:
+        topics = topics[start_num]
+    for t in topics:
+        data['topics'].append(t.as_tapatalk())
 
     data = {
         'total_topic_num': forum.topic_count,
