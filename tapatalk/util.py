@@ -60,7 +60,7 @@ def topic_as_tapatalk(self):
 
     data = {
         'forum_id': str(self.forum.id),
-        'forum_name': xmlrpclib.Binary(self.forum.name),
+        'forum_name': xmlrpclib.Binary(smart_unicode(self.forum.name).encode('utf-8')),
         'topic_id': str(self.id),
         'topic_title': xmlrpclib.Binary(smart_unicode(self.name).encode('utf-8')),
         'prefix': '',
@@ -90,7 +90,7 @@ def topic_as_tapatalk(self):
 def post_as_tapatalk(self):
     avatar = get_avatar_for_user(self.user)
 
-    post_attachments = self.attachments.all()
+    post_aattachments = self.attachments.all()
     attachments = []
     for attachment in post_attachments:
         attachment = attachment.as_tapatalk()
