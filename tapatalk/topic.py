@@ -119,7 +119,6 @@ def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
             topics = topics[start_num:last_num + 1]
     else:
         topics = topics[start_num]
-    
 
     data = {
         'total_topic_num': forum.topic_count,
@@ -130,9 +129,6 @@ def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
         'require_prefix': False,
         'topics': [],
     }
-
-    for t in topics:
-        data['topics'].append(t.as_tapatalk())
 
     subscriptions = []
     if request.user.is_authenticated():
