@@ -7,8 +7,11 @@ import xmlrpclib
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from .lib import html2markdown, replace_tags
-from avatar.util import get_primary_avatar
-
+from avatar.util import get_primary_avatar, force_bytes
+import hashlib
+from django.conf import settings
+from urlparse import urljoin
+from urllib import urlencode
 
 def get_user(username):
     username = u"" + username.__str__()  # TODO: check this
@@ -27,6 +30,14 @@ def get_avatar_for_user(user):
         avatar_container = get_primary_avatar(user, 72)
         if avatar_container:
             avatar = avatar_container.avatar_url(72)
+        else:
+            if settings.AVATAR_GRAVATAR_BACKUP:
+                params = {'s': "72"}
+                if settings.AVATAR_GRAVATAR_DEFAULT:
+                    params['d'] = settings.AVATAR_GRAVATAR_DEFAULT
+                path = "%s/?%s" % (hashlib.md5(force_bytes(user.email)).hexdigest(),
+                                   urlencode(params))
+                avatar = urljoin(settings.AVATAR_GRAVATAR_BASE_URL, path)
     except:
         pass
 
