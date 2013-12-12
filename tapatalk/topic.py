@@ -26,7 +26,7 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
         #searching more than forum_settings.SEARCH_PAGE_SIZE in this way - not good idea :]
         topics = [topic for topic in topics[:forum_settings.SEARCH_PAGE_SIZE * 5] if forum_extras.has_unreads(topic, request.user)]
 
-    data['total_topic_num'] = 41352
+    data['total_topic_num'] = 46819
 
     if start_num != 0 or last_num != 0:
         topics = topics[start_num:last_num]
@@ -44,7 +44,7 @@ def get_latest_topic(request, start_num=0, last_num=None, search_id='', filters=
         'topics': [],
     }
     topics = Topic.objects.filter(forum__category__groups__isnull=True)
-    data['total_topic_num'] = 43437
+    data['total_topic_num'] = 46819
 
     if start_num != 0 or last_num != 0:
         topics = topics[start_num:last_num]
