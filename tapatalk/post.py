@@ -29,6 +29,7 @@ def get_thread(request, topic_id, start_num, last_num, return_html=True):
         posts = posts[start_num:last_num + 1]
 
     for post in posts:
+        post.last_post = None
         p = post.as_tapatalk()
 
         # TODO: make me work

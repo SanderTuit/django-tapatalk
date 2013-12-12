@@ -97,6 +97,7 @@ def topic_as_tapatalk(self):
             'post_author_id': str(self.last_post.user.id),
             'icon_url': get_avatar_for_user(self.last_post.user),
             'post_author_name': xmlrpclib.Binary(self.last_post.user.username.encode('utf-8')),
+            'topic_author_name': xmlrpclib.Binary(self.last_post.user.username.encode('utf-8'))
         })
 
     return data
