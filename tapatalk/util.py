@@ -95,6 +95,7 @@ def topic_as_tapatalk(self):
             'last_reply_time': xmlrpclib.DateTime(str(self.last_post.created.isoformat()).replace('-','') + '+01:00'),
             'post_time': xmlrpclib.DateTime(str(self.last_post.created.isoformat()).replace('-','') + '+01:00'),
             'post_author_id': self.last_post.user.id,
+            'icon_url': get_avatar_for_user(self.last_post.user),
             'post_author_name': xmlrpclib.Binary(self.last_post.user.username.encode('utf-8')),
         })
 
