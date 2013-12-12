@@ -121,7 +121,7 @@ def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
         topics = topics[start_num]
 
     data = {
-        'total_topic_num': forum.topic_count,
+        'total_topic_num': max(0,forum.topic_count),
         'forum_id': str(forum_id),
         'forum_name': xmlrpclib.Binary(forum.name.encode('utf-8')),
         'can_post': True,
