@@ -42,11 +42,11 @@ def attachment_as_tapatalk(self):
 
     data = {
         'content_type': content_type.encode('utf-8'),
-        'url': self.get_absolute_url().encode('utf-8'),
+        'url': 'http://androidworld.nl/' + self.get_absolute_url().encode('utf-8'),
     }
 
     if content_type == "image":
-        data['thumbnail_url'] = self.get_absolute_url().encode('utf-8')
+        data['thumbnail_url'] = 'http://androidworld.nl/' + self.get_absolute_url().encode('utf-8')
     return data
 
 def topic_as_tapatalk(self):
