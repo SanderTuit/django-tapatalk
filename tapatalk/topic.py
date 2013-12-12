@@ -37,7 +37,7 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
     return data
 
 
-def get_latest_topic(request, start_num=0, last_num=None, search_id='', filters=[]):
+def get_latest_topic(request, start_num=0, last_num=0, search_id='', filters=[]):
 
     data = {
         'result': True,
@@ -47,8 +47,8 @@ def get_latest_topic(request, start_num=0, last_num=None, search_id='', filters=
     data['total_topic_num'] = 46819
 
     if start_num != 0 or last_num != 0:
-        topics = topics[start_num:last_num + 1]
-
+        if last_num - start_num > 50:
+            topics = topics[start_num:start_num + 50]
     for t in topics:
         data['topics'].append(t.as_tapatalk())
 
