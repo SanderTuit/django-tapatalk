@@ -7,6 +7,7 @@ import xmlrpclib
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from .lib import html2markdown, replace_tags
+from avatar.util import get_primary_avatar
 
 
 def get_user(username):
@@ -23,7 +24,7 @@ def get_avatar_for_user(user):
     # fix this to correct call from django_bb
     avatar = None
     try:
-        avatar = user.profile.get_avatar()
+        avatar = get_primary_avatar(user, size=72):
     except:
         pass
 
