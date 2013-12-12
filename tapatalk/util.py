@@ -26,7 +26,7 @@ def get_avatar_for_user(user):
     try:
         avatar_container = get_primary_avatar(user, 72)
         if avatar_container:
-            avatar = "http://androidworld.nl" + avatar_container.avatar_url(72)
+            avatar = avatar_container.avatar_url(72)
     except:
         pass
 
