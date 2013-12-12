@@ -37,7 +37,7 @@ def attachment_as_tapatalk(self):
     content_type = "other"
     if name.endswith(".png") or name.endswith(".gif") or name.endswith(".jpg") or name.endswith(".jpeg"):
         content_type = "image"
-    elif name.endswith(".pdf")
+    elif name.endswith(".pdf"):
         content_type = "pdf"
 
     data = {
