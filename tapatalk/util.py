@@ -77,7 +77,7 @@ def topic_as_tapatalk(self):
         'forum_name': xmlrpclib.Binary(smart_unicode(self.forum.name).encode('utf-8')),
         'topic_id': str(self.id),
         'topic_title': xmlrpclib.Binary(smart_unicode(self.name).encode('utf-8')),
-        'prefix': '',
+        'prefix': xmlrpclib.Binary(''),
         'icon_url': avatar,
         'reply_number': int(max(0,self.post_count)),
         'view_number': int(max(0,str(self.views))),
