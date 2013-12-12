@@ -60,7 +60,7 @@ def topic_as_tapatalk(self):
 
     data = {
         'forum_id': str(self.forum.id),
-        'forum_name': xmlrpclib.Binary(self.forum.name.encode('utf-8')),
+        'forum_name': xmlrpclib.Binary(smart_unicode(self.forum.name).encode('utf-8')),
         'topic_id': str(self.id),
         'topic_title': xmlrpclib.Binary(smart_unicode(self.name).encode('utf-8')),
         'prefix': '',
