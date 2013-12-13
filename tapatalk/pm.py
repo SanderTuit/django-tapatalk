@@ -12,7 +12,6 @@ def get_box_info(request):
 
     data = {
         'result': True,
-        'message_room_count': 12345,
         'list': [],
     }
 
@@ -23,8 +22,16 @@ def get_box_info(request):
             if msg.read_at == None:
                 unread += 1
 
+        if name == 'inbox':
+            num = 0
+        elif name == 'sent':
+            num = 1
+        else:
+            num = 2
+
+
         item = {
-            'box_id': name,
+            'box_id': str(num),
             'box_name': xmlrpclib.Binary(name),
             'msg_count': len(box),
             'unread_count': unread,
@@ -33,15 +40,14 @@ def get_box_info(request):
             item['box_type'] = name.upper()
         
         data['list'].append(item)
-
     return data
 
 
 # TODO: add pager
 def get_box(request, box_id='', start_num=0, end_num=0):
-    if box_id == 'inbox':
+    if box_id == '0':
         box = Message.objects.inbox_for(request.user)
-    if box_id == 'sent':
+    elif box_id == '1':
         box = Message.objects.outbox_for(request.user)
     else:
         box = Message.objects.inbox_for(request.user)
