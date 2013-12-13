@@ -27,8 +27,10 @@ def get_box_info(request):
             'box_name': name,
             'msg_count': len(box),
             'unread_count': unread,
-            'box_type': name.upper(),
         }
+        if name != "trash":
+            item['box_type'] = name.upper()
+        
         data['list'].append(item)
 
     return data
