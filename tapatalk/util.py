@@ -174,10 +174,10 @@ def message_as_tapatalk(self):
         'is_online': online,
         'text_body': xmlrpclib.Binary(self.body.encode('utf-8')),
         'msg_to': [
-            {
-                'user_id': str(self.recipient.id),
-                'username': xmlrpclib.Binary(self.recipient.username.encode('utf-8')),
-            }
+            #{
+            #    'user_id': str(self.recipient.id),
+            #    'username': xmlrpclib.Binary(self.recipient.username.encode('utf-8')),
+            #}
         ],
     }
 
