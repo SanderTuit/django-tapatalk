@@ -102,8 +102,11 @@ def get_participated_topic(request, user_name='', start_num=0, last_num=None, se
 
 
 def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
-    topics = Topic.objects.filter(forum_id=forum_id).filter(forum__category__groups__isnull=True)
+    topics = Topic.objects.filter(forum_id=forum_id).all()
     forum = Forum.objects.get(pk=forum_id)
+
+    if forum.category.has_access(request.user) == False:
+        topics = []
 
     if mode == 'TOP':
         topics = topics.filter(sticky=True)
