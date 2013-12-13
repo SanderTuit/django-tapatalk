@@ -66,7 +66,7 @@ def get_raw_post(request, post_id):
 
 
 def save_raw_post(request, post_id, post_title='', post_content='', return_html=False, prefix_id=''):
-    p = Post.objects.get(pk=post_id, user=request.user)
+    p = Post.objects.get(pk=post_id, user=request.user.id)
     p.updated = datetime.now()
     p.updated_reason = "Bewerkt via Tapatalk"
     p.body = post_content
