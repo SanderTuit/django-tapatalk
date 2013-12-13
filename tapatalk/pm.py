@@ -24,7 +24,7 @@ def get_box_info(request):
 
         item = {
             'box_id': name,
-            'box_name': name,
+            'box_name': xmlrpclib.Binary(name),
             'msg_count': len(box),
             'unread_count': unread,
         }
