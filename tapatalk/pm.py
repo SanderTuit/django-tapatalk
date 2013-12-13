@@ -67,6 +67,7 @@ def get_box(request, box_id='', start_num=0, end_num=0):
 
     for msg in box:
         m = msg.as_tapatalk()
+        m.pop("text_body")
         data['list'].append(m)
 
     return data
