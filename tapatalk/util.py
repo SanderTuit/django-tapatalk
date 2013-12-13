@@ -170,6 +170,7 @@ def message_as_tapatalk(self):
         'msg_from_id': str(self.sender.id),
         'msg_from': xmlrpclib.Binary(self.sender.username.encode('utf-8')),
         'icon_url': get_avatar_for_user(self.sender),
+        'user_type': xmlrpclib.Binary('normal'),
         'msg_subject': xmlrpclib.Binary(self.subject.encode('utf-8')),
         'short_content': xmlrpclib.Binary(self.body.encode('utf-8')),
         'is_online': online,
