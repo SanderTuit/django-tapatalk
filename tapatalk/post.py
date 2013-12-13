@@ -1,6 +1,7 @@
 from djangobb_forum.models import *
 import xmlrpclib
 from django.utils.encoding import smart_unicode
+from django.contrib import auth
 
 def get_thread(request, topic_id, start_num, last_num, return_html=True):
     topic = Topic.objects.get(pk=topic_id)
@@ -66,7 +67,7 @@ def get_raw_post(request, post_id):
 
 
 def save_raw_post(request, post_id, post_title='', post_content='', return_html=False, prefix_id=''):
-    p = Post.objects.get(pk=post_id, user=request.user.id)
+    p = Post.objects.get(pk=post_id, user=auth.get_user(request))
     p.updated = datetime.now()
     p.updated_reason = "Bewerkt via Tapatalk"
     p.body = post_content
