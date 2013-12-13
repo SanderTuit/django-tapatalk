@@ -31,6 +31,8 @@ def login(request, login_name=None, password=None, anonymous=False, push='1'):
                 'username': xmlrpclib.Binary(user.username),
                 'usergroup_id': groups,
                 'post_count': user.forum_profile.post_count,
+                'can_pm': True,
+                'can_send_pm': True
             }
 
     return {
