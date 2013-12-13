@@ -50,8 +50,8 @@ def get_box(request, box_id='', start_num=0, end_num=0):
 
     data = {
         'result': True,
-        'total_message_count': len(box),
-        'total_unread_count': unread,
+        'total_message_count': int(len(box)),
+        'total_unread_count': int(unread),
         'list': [],
     }
 

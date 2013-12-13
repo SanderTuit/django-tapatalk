@@ -162,7 +162,7 @@ def message_as_tapatalk(self):
         'msg_id': str(self.id),
         'msg_state': state,
         'sent_date': xmlrpclib.DateTime(str(self.sent_at).replace('-','') + '+01:00'),
-        'msg_from_id': self.sender.id,
+        'msg_from_id': str(self.sender.id),
         'msg_from': xmlrpclib.Binary(self.sender.username.encode('utf-8')),
         'icon_url': get_avatar_for_user(self.sender),
         'msg_subject': xmlrpclib.Binary(self.subject.encode('utf-8')),
@@ -171,7 +171,7 @@ def message_as_tapatalk(self):
         'text_body': xmlrpclib.Binary(self.body.encode('utf-8')),
         'msg_to': [
             {
-                'user_id': self.recipient.id,
+                'user_id': str(self.recipient.id),
                 'username': xmlrpclib.Binary(self.recipient.username.encode('utf-8')),
             }
         ],
