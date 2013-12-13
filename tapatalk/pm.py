@@ -12,6 +12,7 @@ def get_box_info(request):
 
     data = {
         'result': True,
+        'message_room_count': 12345,
         'list': [],
     }
 
