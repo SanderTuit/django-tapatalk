@@ -12,6 +12,7 @@ import hashlib
 from django.conf import settings
 from urlparse import urljoin
 from urllib import urlencode
+from time import time
 
 def get_user(username):
     username = u"" + username.__str__()  # TODO: check this
@@ -157,11 +158,14 @@ def message_as_tapatalk(self):
     online = cache.get('djangobb_user%d' % self.sender.id)
     if online == None:
         online = False
+    else: 
+        online = True
 
     data = {
         'msg_id': str(self.id),
         'msg_state': state,
         'sent_date': xmlrpclib.DateTime(str(self.sent_at).replace('-','') + '+01:00'),
+        'timestamp': str(int(time())),
         'msg_from_id': str(self.sender.id),
         'msg_from': xmlrpclib.Binary(self.sender.username.encode('utf-8')),
         'icon_url': get_avatar_for_user(self.sender),
