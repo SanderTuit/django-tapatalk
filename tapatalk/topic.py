@@ -67,8 +67,9 @@ def get_latest_topic(request, start_num=None, last_num=None, search_id='', filte
     else:
         topics = topics[start_num]
     for t in topics:
+        t = t.as_tapatalk()
         t['topic_author_name'] = ""
-        data['topics'].append(t.as_tapatalk())
+        data['topics'].append(t)
 
     return data
 
