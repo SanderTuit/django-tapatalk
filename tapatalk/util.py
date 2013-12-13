@@ -147,11 +147,11 @@ def post_as_tapatalk(self):
 
 
 def message_as_tapatalk(self):
-    state = 'Unread'
+    state = 1
     if self.read_at:
-        state = 'Read'
+        state = 2
     if self.replied_at:
-        state = 'Replied'
+        state = 3
 
     # try to get online status
     online = cache.get('djangobb_user%d' % self.sender.id)
