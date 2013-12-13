@@ -13,6 +13,7 @@ from django.conf import settings
 from urlparse import urljoin
 from urllib import urlencode
 from time import time
+from postmarkup import strip_bbcode
 
 def get_user(username):
     username = u"" + username.__str__()  # TODO: check this
@@ -92,13 +93,13 @@ def topic_as_tapatalk(self):
         h = HTMLParser.HTMLParser()
         body = h.unescape(replace_tags(self.last_post.body)).encode('utf-8')
         data.update({
-            'short_content': xmlrpclib.Binary(body[:100]),
+            'short_content': xmlrpclib.Binary(strip_bbcode(body[:200].strip),
             'last_reply_time': xmlrpclib.DateTime(str(self.last_post.created.isoformat()).replace('-','') + '+01:00'),
             'post_time': xmlrpclib.DateTime(str(self.last_post.created.isoformat()).replace('-','') + '+01:00'),
             'post_author_id': str(self.last_post.user.id),
             'icon_url': get_avatar_for_user(self.last_post.user),
             'post_author_name': xmlrpclib.Binary(self.last_post.user.username.encode('utf-8')),
-            'topic_author_name': xmlrpclib.Binary(self.last_post.user.username.encode('utf-8'))
+            'topic_author_name': xmlrpclib.Binary("")
         })
 
     return data
