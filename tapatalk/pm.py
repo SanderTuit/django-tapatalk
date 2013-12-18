@@ -23,6 +23,7 @@ def get_box_info(request):
             if msg.read_at == None:
                 unread += 1
 
+        num = 0
         if name == 'inbox':
             num = 0
         elif name == 'sent':
@@ -36,9 +37,8 @@ def get_box_info(request):
             'box_name': xmlrpclib.Binary(name),
             'msg_count': len(box),
             'unread_count': unread,
+            'box_type': name.upper()
         }
-        if name != "trash":
-            item['box_type'] = name.upper()
         
         data['list'].append(item)
     return data
