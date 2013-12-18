@@ -46,6 +46,7 @@ def get_box_info(request):
 
 # TODO: add pager
 def get_box(request, box_id='', start_num=0, end_num=0):
+    box = []
     if box_id == '0':
         box = Message.objects.inbox_for(request.user)
     elif box_id == '1':
@@ -58,9 +59,13 @@ def get_box(request, box_id='', start_num=0, end_num=0):
         if msg.read_at == None:
             unread += 1
 
+    total_message_count = len(box)
+    if (total_message_count == None):
+        total_message_count = 0
+
     data = {
         'result': True,
-        'total_message_count': int(len(box)),
+        'total_message_count': int(total_message_count),
         'total_unread_count': int(unread),
         'list': [],
     }
