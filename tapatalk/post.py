@@ -3,7 +3,7 @@ import xmlrpclib
 from django.utils.encoding import smart_unicode
 from django.contrib import auth
 
-def get_thread(request, topic_id, start_num, last_num, return_html=True):
+def get_thread(request, topic_id, start_num=None, last_num=None, return_html=True):
     topic = Topic.objects.get(pk=topic_id)
 
     if request.user.is_authenticated():
@@ -26,12 +26,17 @@ def get_thread(request, topic_id, start_num, last_num, return_html=True):
 
     posts = Post.objects.filter(topic=topic)
 
-    if start_num == len(posts) and last_num == len(posts) + 9:
-        start_num = start_num - 10
-        last_num = last_num - 10
+    if start_num == None and last_num == None:
+        start_num = 0
+        last_num = 19
 
-    if start_num != 0 or last_num != 0:
-        posts = posts[start_num:last_num + 1]
+    if start_num != last_num:
+        if last_num - start_num > 50:
+            posts = posts[start_num:start_num + 50]
+        else: 
+            posts = posts[start_num:last_num + 1]
+    else:
+        posts = posts[start_num]
 
     for post in posts:
         post.last_post = None
