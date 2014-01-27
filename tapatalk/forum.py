@@ -78,12 +78,14 @@ def get_forum(request, return_description=False, forum_id=''):
 
     # loop through categories, and create result
     for category in categories:
+        description = ""
         cat = {
             'forum_id': str(category.id),
             'forum_name': xmlrpclib.Binary(category.name.encode('utf-8')),
             'parent_id': '-1',
             'logo_url': str("http://androidworld.nl/favicon.ico"),
             'sub_only': True,
+            'description': description,
             'child': [],
         }
 
@@ -94,6 +96,8 @@ def get_forum(request, return_description=False, forum_id=''):
                     Q(category__groups__isnull=True))
 
         for forum in fora:
+            if (return_description):
+                description = forum.description
             f = {
                 'forum_id': str(forum.id),
                 'forum_name': xmlrpclib.Binary(forum.name.encode('utf-8')),
@@ -101,6 +105,7 @@ def get_forum(request, return_description=False, forum_id=''):
                 'logo_url': str("http://androidworld.nl/favicon.ico"),
                 'sub_only': False,
                 'child': [],
+                'description': description,
                 'can_post': True,
             }
 
@@ -109,12 +114,15 @@ def get_forum(request, return_description=False, forum_id=''):
                     Q(category__groups__isnull=True))
 
             for child in childs:
+                if (return_description):
+                    description = child.description
                 c = {
                     'forum_id': str(child.id),
                     'forum_name': xmlrpclib.Binary(child.name.encode('utf-8')),
                     'parent_id': str(forum.id),
                     'logo_url': str("http://androidworld.nl/favicon.ico"),
                     'sub_only': False,
+                    'description': description,
                     'can_post': True,
                 }
 
