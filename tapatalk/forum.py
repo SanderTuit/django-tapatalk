@@ -85,7 +85,7 @@ def get_forum(request, return_description=False, forum_id=''):
             'parent_id': '-1',
             'logo_url': str("http://androidworld.nl/favicon.ico"),
             'sub_only': True,
-            'description': description,
+            'description': xmlrpclib.Binary(description('utf-8')),
             'child': [],
         }
 
@@ -105,7 +105,7 @@ def get_forum(request, return_description=False, forum_id=''):
                 'logo_url': str("http://androidworld.nl/favicon.ico"),
                 'sub_only': False,
                 'child': [],
-                'description': description,
+                'description': xmlrpclib.Binary(description('utf-8')),
                 'can_post': True,
             }
 
@@ -122,7 +122,7 @@ def get_forum(request, return_description=False, forum_id=''):
                     'parent_id': str(forum.id),
                     'logo_url': str("http://androidworld.nl/favicon.ico"),
                     'sub_only': False,
-                    'description': description,
+                    'description': xmlrpclib.Binary(description('utf-8')),
                     'can_post': True,
                 }
 
