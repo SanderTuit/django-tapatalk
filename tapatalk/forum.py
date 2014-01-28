@@ -84,7 +84,7 @@ def get_forum(request, return_description=False, forum_id=''):
             'forum_id': str(category.id),
             'forum_name': xmlrpclib.Binary(category.name.encode('utf-8')),
             'parent_id': '-1',
-            'logo_url': str("http://androidworld.nl/favicon.ico"),
+            'logo_url': str(category.logo.url),
             'sub_only': True,
             'description': xmlrpclib.Binary(description.encode('utf-8')),
             'child': [],
