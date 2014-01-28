@@ -103,7 +103,7 @@ def get_forum(request, return_description=False, forum_id=''):
                 'forum_id': str(forum.id),
                 'forum_name': xmlrpclib.Binary(forum.name.encode('utf-8')),
                 'parent_id': str(category.id),
-                'logo_url': str(settings.MEDIA_URL + forum.logo),
+                'logo_url': str(forum.logo.url),
                 'sub_only': False,
                 'child': [],
                 'description': xmlrpclib.Binary(description.encode('utf-8')),
@@ -121,14 +121,13 @@ def get_forum(request, return_description=False, forum_id=''):
                     'forum_id': str(child.id),
                     'forum_name': xmlrpclib.Binary(child.name.encode('utf-8')),
                     'parent_id': str(forum.id),
-                    'logo_url': str(settings.MEDIA_URL + child.logo),
+                    'logo_url': str(child.logo.url),
                     'sub_only': False,
                     'description': xmlrpclib.Binary(description.encode('utf-8')),
                     'can_post': True,
                 }
 
                 f['child'].append(c)
-
             cat['child'].append(f)
 
         data.append(cat)
