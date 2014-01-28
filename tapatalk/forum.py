@@ -1,5 +1,6 @@
 from util import *
 import xmlrpclib
+from django.conf import settings
 from django.db.models import Q
 
 
@@ -102,7 +103,7 @@ def get_forum(request, return_description=False, forum_id=''):
                 'forum_id': str(forum.id),
                 'forum_name': xmlrpclib.Binary(forum.name.encode('utf-8')),
                 'parent_id': str(category.id),
-                'logo_url': str("http://androidworld.nl/favicon.ico"),
+                'logo_url': str(settings.MEDIA_URL + forum.logo),
                 'sub_only': False,
                 'child': [],
                 'description': xmlrpclib.Binary(description.encode('utf-8')),
@@ -120,7 +121,7 @@ def get_forum(request, return_description=False, forum_id=''):
                     'forum_id': str(child.id),
                     'forum_name': xmlrpclib.Binary(child.name.encode('utf-8')),
                     'parent_id': str(forum.id),
-                    'logo_url': str("http://androidworld.nl/favicon.ico"),
+                    'logo_url': str(settings.MEDIA_URL + child.logo),
                     'sub_only': False,
                     'description': xmlrpclib.Binary(description.encode('utf-8')),
                     'can_post': True,
