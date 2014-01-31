@@ -70,7 +70,7 @@ def get_forum(request, return_description=False, forum_id=''):
     if request.user.is_anonymous():
         user_groups = []
 
-    categories = Category.objects.all().exclude(category_id=-1).exclude(category_id=307).filter(
+    categories = Category.objects.all().exclude(id=-1).exclude(id=307).filter(
             Q(groups__in=user_groups) | \
             Q(groups__isnull=True))
 
