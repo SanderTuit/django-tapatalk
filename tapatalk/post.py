@@ -78,7 +78,7 @@ def get_raw_post(request, post_id):
 def save_raw_post(request, post_id, post_title='', post_content='', return_html=False, prefix_id=''):
     p = Post.objects.get(pk=post_id, user=auth.get_user(request))
     p.updated = datetime.now()
-    p.updated_reason = "Bewerkt via Tapatalk"
+    p.updated_reason = "Bewerkt via Tapatalk/Androidworld Reader"
     p.body = str(post_content)
     p.save()
 
