@@ -15,10 +15,10 @@ LICENSE = ''
 
 setup(
     name = 'django-tapatalk',
-    version = '0.5.8.56',
+    version = '0.5.8.57',
     description='DjangoBB Tapatalk implementation',
     long_description=README,
-    author = 'Sander van de Graaf',
+    author = 'Sander van de Graaf, Sander Tuit',
     author_email = 'mail@svdgraaf.nl',
     license = LICENSE,
     url = 'http://github.com/svdgraaf/django-tapatalk/',
