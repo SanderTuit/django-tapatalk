@@ -6,7 +6,7 @@ from django.contrib import auth
 
 def get_thread(request, topic_id, start_num=None, last_num=None, return_html=True):
     Topic.objects.filter(pk=topic_id).update(views=F('views') + 1)
-
+    topic = Topic.objects.get(pk=topic_id)
     if request.user.is_authenticated():
         topic.update_read(request.user)
 
