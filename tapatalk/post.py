@@ -1,12 +1,11 @@
 from djangobb_forum.models import *
 import xmlrpclib
+from django.db.models import F
 from django.utils.encoding import smart_unicode
 from django.contrib import auth
 
 def get_thread(request, topic_id, start_num=None, last_num=None, return_html=True):
-    topic = Topic.objects.get(pk=topic_id)
-    topic.views += 1
-    topic.save()
+    Topic.objects.filter(pk=topic_id).update(views=F('views') + 1)
 
     if request.user.is_authenticated():
         topic.update_read(request.user)
