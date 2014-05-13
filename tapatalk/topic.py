@@ -14,7 +14,7 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
     groups = request.user.groups.all() or [] #removed after django > 1.2.3
     topics = Topic.objects.filter(
                    Q(forum__category__groups__in=groups) | \
-                   Q(forum__category__groups__isnull=True))
+                   Q(forum__category__groups__isnull=True)).filter(deleted=False)
 
     try:
         last_read = PostTracking.objects.get(user_id=request.user.pk).last_read
@@ -51,7 +51,7 @@ def get_latest_topic(request, start_num=None, last_num=None, search_id='', filte
         'result': True,
         'topics': [],
     }
-    topics = Topic.objects.filter(forum__category__groups__isnull=True)
+    topics = Topic.objects.filter(forum__category__groups__isnull=True).filter(deleted=False)
     data['total_topic_num'] = 46819
 
     
@@ -77,7 +77,7 @@ def get_latest_topic(request, start_num=None, last_num=None, search_id='', filte
 # TODO: Pagination
 def get_participated_topic(request, user_name='', start_num=0, last_num=None, search_id='', user_id=''):
     user = request.user
-    posts = Post.objects.filter(user=user)
+    posts = Post.objects.filter(user=user).filter(deleted=False)
 
     topics = []
     tmp = []
@@ -85,7 +85,7 @@ def get_participated_topic(request, user_name='', start_num=0, last_num=None, se
         if post.topic.id not in tmp:
                 tmp.append(post.topic_id)
 
-    topics = Topic.objects.filter(pk__in=tmp).filter(forum__category__groups__isnull=True)
+    topics = Topic.objects.filter(pk__in=tmp).filter(forum__category__groups__isnull=True).filter(deleted=False)
 
     if start_num != 0 or last_num != 0:
         topics = topics[start_num:last_num + 1]

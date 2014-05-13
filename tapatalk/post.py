@@ -25,7 +25,7 @@ def get_thread(request, topic_id, start_num=None, last_num=None, return_html=Tru
         'is_closed': topic.closed,
     }
 
-    posts = Post.objects.filter(topic=topic)
+    posts = Post.objects.filter(topic=topic).filter(deleted=False)
 
     if start_num == None and last_num == None:
         start_num = 0
