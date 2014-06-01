@@ -26,7 +26,7 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
         #searching more than forum_settings.SEARCH_PAGE_SIZE in this way - not good idea :]
         topics = [topic for topic in topics[:forum_settings.SEARCH_PAGE_SIZE * 5] if forum_extras.has_unreads(topic, request.user)]
 
-    data['total_topic_num'] = 46819
+    data['total_topic_num'] = len(topics)
 
     if start_num == None and last_num == None:
         start_num = 0
