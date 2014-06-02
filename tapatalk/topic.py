@@ -2,6 +2,24 @@ import xmlrpclib
 from util import *
 from django.db.models import Q
 
+def has_unreads(topic, user):
+    """
+    Check if topic has messages which user didn't read.
+    """
+    try:
+        if not user.is_authenticated() or\
+            (user.posttracking.last_read is not None and\
+             user.posttracking.last_read > topic.updated):
+                return False
+        else:
+            if isinstance(user.posttracking.topics, dict):
+                if topic.last_post_id > user.posttracking.topics.get(str(topic.id), 0):
+                    return True
+                else:
+                    return False
+            return True
+    except:
+        return False
 
 def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
     data = {
@@ -24,7 +42,7 @@ def get_unread_topic(request, start_num, last_num, search_id='', filters=[]):
         topics = topics.filter(Q(updated__gte=last_read) | Q(created__gte=last_read)).all()
     else:
         #searching more than forum_settings.SEARCH_PAGE_SIZE in this way - not good idea :]
-        topics = [topic for topic in topics[:forum_settings.SEARCH_PAGE_SIZE * 5] if forum_extras.has_unreads(topic, request.user)]
+        topics = [topic for topic in topics[:forum_settings.SEARCH_PAGE_SIZE * 5] if has_unreads(topic, request.user)]
 
     data['total_topic_num'] = len(topics)
 
