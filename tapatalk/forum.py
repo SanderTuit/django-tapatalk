@@ -2,7 +2,8 @@ from util import *
 import xmlrpclib
 from django.conf import settings
 from django.db.models import Q
-
+from djangobb_forum.models import PostTracking
+from datetime import datetime
 
 def get_config(request):
     return {
@@ -24,7 +25,7 @@ def get_config(request):
         'goto_unread': '0',
         'goto_post': '1',
         'mark_read': '1',
-        'mark_forum': '1',
+        'mark_forum': '0',
         'no_refresh_on_post': '0',
         'subscribe_forum': '0',
         'disable_subscribe_forum': '1',
@@ -58,6 +59,13 @@ def get_config(request):
         'min_search_length': '3',
         # 'charset': 'utf-8',
         'advanced_delete': '0',
+    }
+
+
+def mark_all_as_read(request):
+    PostTracking.objects.filter(user__id=request.user.id).update(last_read=datetime.now(), topics=None)
+    return {
+        'result': True,
     }
 
 
