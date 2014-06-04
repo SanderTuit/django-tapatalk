@@ -4,6 +4,7 @@ XMLRPC_DEFAULT_METHODS = (
     ('tapatalk.forum.get_config', 'get_config'),
     ('tapatalk.forum.get_forum', 'get_forum'),
     ('tapatalk.forum.get_online_users', 'get_online_users'),
+    ('tapatalk.forum.mark_all_as_read', 'mark_all_as_read'),
 
     ('tapatalk.search.search_topic', 'search_topic'),
     ('tapatalk.search.search_post', 'search_post'),
