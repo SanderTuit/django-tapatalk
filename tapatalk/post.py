@@ -71,6 +71,16 @@ def reply_post(request, forum_id, topic_id, subject='', text_body='', attachment
     }
 
 
+def get_quote_post(request, post_id):
+    p = Post.objects.get(pk=post_id)
+
+    body = p.body.encode('utf-8')
+    content = "[quote=" + p.user.username.encode('utf-8') + "]" + body + "[/quote]"
+    result = {"post_id": post_id, "post_title": xmlrpclib.Binary(''), "post_content": xmlrpclib.Binary(content)}
+
+    return result
+
+
 def get_raw_post(request, post_id):
     p = Post.objects.get(pk=post_id)
     return p.as_tapatalk()
