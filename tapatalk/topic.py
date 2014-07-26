@@ -122,7 +122,7 @@ def get_participated_topic(request, user_name='', start_num=0, last_num=None, se
 
 
 def get_topic(request, forum_id, start_num=None, last_num=None, mode='DATE'):
-    topics = Topic.objects.filter(forum_id=forum_id).all()
+    topics = Topic.objects.all().filter(forum_id=forum_id).filter(deleted=False)
     forum = Forum.objects.get(pk=forum_id)
 
     if forum.category.has_access(request.user) == False:
