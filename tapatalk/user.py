@@ -28,7 +28,7 @@ def login(request, login_name=None, password=None, anonymous=False, push='1'):
             'result': False,
         }
 
-    send_mail("Debuggin Forum", "Inloggende gebruiker:" + login_name + ", string: " + str(login_name), settings.DEFAULT_FROM_EMAIL, ["sander@androidworld.nl"])
+    send_mail("Debuggin Forum", "Inloggende gebruiker:" + str(login_name), settings.DEFAULT_FROM_EMAIL, ["sander@androidworld.nl"])
 
 
     # we have a username and password, let's try to login
