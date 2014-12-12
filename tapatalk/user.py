@@ -28,9 +28,6 @@ def login(request, login_name=None, password=None, anonymous=False, push='1'):
             'result': False,
         }
 
-    send_mail("Debuggin Forum", "Inloggende gebruiker:" + str(login_name), settings.DEFAULT_FROM_EMAIL, ["sander@androidworld.nl"])
-
-
     # we have a username and password, let's try to login
     user = authenticate(username=str(login_name), password=str(password))
 
@@ -64,7 +61,7 @@ def login(request, login_name=None, password=None, anonymous=False, push='1'):
 def get_inbox_stat(request):
     topics = Topic.objects.all()
     try:
-        last_read = PostTracking.objects.get(user=request.user).last_read
+        last_read = PostTracking.objects.get(user=request.user.id).last_read
     except PostTracking.DoesNotExist:
         last_read = None
     try:
