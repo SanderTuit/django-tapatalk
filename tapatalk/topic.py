@@ -94,7 +94,7 @@ def get_latest_topic(request, start_num=None, last_num=None, search_id='', filte
 
 # TODO: Pagination
 def get_participated_topic(request, user_name='', start_num=0, last_num=None, search_id='', user_id=''):
-    user = request.user
+    user = request.user.id
     posts = Post.objects.filter(user=user).filter(deleted=False)
 
     topics = []

@@ -5,9 +5,9 @@ import datetime
 
 def get_box_info(request):
     boxes = {
-        'inbox': Message.objects.inbox_for(request.user),
-        'sent': Message.objects.outbox_for(request.user),
-        'trash': Message.objects.trash_for(request.user),
+        'inbox': Message.objects.inbox_for(request.user.id),
+        'sent': Message.objects.outbox_for(request.user.id),
+        'trash': Message.objects.trash_for(request.user.id),
     }
 
     data = {
@@ -48,11 +48,11 @@ def get_box_info(request):
 def get_box(request, box_id='', start_num=0, end_num=0):
     box = []
     if box_id == '0':
-        box = Message.objects.inbox_for(request.user)
+        box = Message.objects.inbox_for(request.user.id)
     elif box_id == '1':
-        box = Message.objects.outbox_for(request.user)
+        box = Message.objects.outbox_for(request.user.id)
     else:
-        box = Message.objects.inbox_for(request.user)
+        box = Message.objects.inbox_for(request.user.id)
 
     unread = 0
     for msg in box:
@@ -80,9 +80,9 @@ def get_box(request, box_id='', start_num=0, end_num=0):
 
 def get_message(request, message_id=None, box_id='', return_html=False):
     try:
-        msg = Message.objects.get(recipient=request.user, pk=message_id)
+        msg = Message.objects.get(recipient=request.user.id, pk=message_id)
     except:
-        msg = Message.objects.get(sender=request.user, pk=message_id)
+        msg = Message.objects.get(sender=request.user.id, pk=message_id)
     now = datetime.datetime.now()
     msg.read_at = now
     msg.save()
@@ -94,9 +94,9 @@ def get_message(request, message_id=None, box_id='', return_html=False):
 
 def delete_message(request, message_id=None, box_id=''):
     try:
-        msg = Message.objects.get(recipient=request.user, pk=message_id)
+        msg = Message.objects.get(recipient=request.user.id, pk=message_id)
     except:
-        msg = Message.objects.get(sender=request.user, pk=message_id)
+        msg = Message.objects.get(sender=request.user.id, pk=message_id)
 
     try:
         msg.delete()
@@ -119,7 +119,7 @@ def create_message(request, usernames=[], subject='', text_body='', action='', p
     for recipient in recipients:
         msg = Message()
         msg.recipient = recipient
-        msg.sender = request.user
+        msg.sender = request.user.id
         msg.subject = subject
         msg.body = text_body
         if action == 'reply':
