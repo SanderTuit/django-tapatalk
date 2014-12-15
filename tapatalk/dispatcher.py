@@ -14,12 +14,7 @@ def send_mail(subject, text, from_email, rec_list, html=None):
     msg = EmailMultiAlternatives(subject, text, from_email, rec_list)
     if html:
         msg.attach_alternative(html, "text/html")
-    if settings.DEBUG:
-        print '---begin---'
-        print 'To:', rec_list
-        print 'Subject:', subject
-        print 'Body:', text
-        print '---end---'
+
     msg.send(fail_silently=True)
 
 class TapatalkXMLRPCDispatcher(DjangoXMLRPCDispatcher):
