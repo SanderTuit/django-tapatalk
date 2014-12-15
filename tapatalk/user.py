@@ -59,6 +59,7 @@ def login(request, login_name=None, password=None, anonymous=False, push='1'):
 
 # See: http://tapatalk.com/api/api_section.php?id=2#get_inbox_stat
 def get_inbox_stat(request):
+
     topics = Topic.objects.all()
     try:
         last_read = PostTracking.objects.get(user=request.user.id).last_read
@@ -71,11 +72,12 @@ def get_inbox_stat(request):
 
     # TODO: check for django_messages
     from django_messages.models import Message
-    box = Message.objects.inbox_for(request.user)
+    box = Message.objects.inbox_for(request.user.id)
     unread = 0
     for msg in box:
         if msg.read_at == None:
             unread += 1
+
 
     return {
         'inbox_unread_count': unread,
