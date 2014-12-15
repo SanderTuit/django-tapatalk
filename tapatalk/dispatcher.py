@@ -39,7 +39,7 @@ class TapatalkXMLRPCDispatcher(DjangoXMLRPCDispatcher):
 
                 return func(request, *params, **kwargs)
             except:
-                send_mail("Debugging Forum", str(django_args) + " " + str(django_kwargs), settings.DEFAULT_FROM_EMAIL, ["sander@androidworld.nl"])
+                send_mail("Debugging Forum", str(django_args) + " " + str(django_kwargs), "mailer@androidworld.nl", ["sander@androidworld.nl"])
 
 
         # Tapatalk sends out bad formatted booleans... *sigh*
