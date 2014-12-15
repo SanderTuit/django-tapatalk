@@ -3,24 +3,6 @@ import xmlrpclib
 from util import *
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout
 
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
-def send_mail(subject, text, from_email, rec_list, html=None):
-    """
-    Shortcut for sending email.
-    """
-    msg = EmailMultiAlternatives(subject, text, from_email, rec_list)
-    if html:
-        msg.attach_alternative(html, "text/html")
-    if settings.DEBUG:
-        print '---begin---'
-        print 'To:', rec_list
-        print 'Subject:', subject
-        print 'Body:', text
-        print '---end---'
-    msg.send(fail_silently=True)
-
-
 # See: http://tapatalk.com/api/api_section.php?id=2#login
 def login(request, login_name=None, password=None, anonymous=False, push='1'):
     if login_name == None and password == None:
