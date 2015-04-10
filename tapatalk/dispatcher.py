@@ -31,8 +31,8 @@ class TapatalkXMLRPCDispatcher(DjangoXMLRPCDispatcher):
                 if django_kwargs:
                     kwargs['django_kwargs'] = django_kwargs
                 return func(request, *params, **kwargs)
-            except Exception, err:
-                send_mail("Debugging Forum", str(method) + " " + str(params) + " " + err.faultString, "mailer@androidworld.nl", ["sander@androidworld.nl"])
+            except Exception as e:
+                send_mail("Debugging Forum", str(method) + " " + str(params) + " " + str(e), "mailer@androidworld.nl", ["sander@androidworld.nl"])
                 return func(request, *params, **kwargs)
 
         # Tapatalk sends out bad formatted booleans... *sigh*
