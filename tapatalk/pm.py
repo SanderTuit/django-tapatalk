@@ -130,7 +130,7 @@ def create_message(request, usernames=[], subject='', text_body='', action='', p
                 msg.parent_msg_id = pm_id
             msg.save()
     except:
-        send_mail("Debugging Forum", "Zucht: " + ''.join(traceback.format_stack()), "mailer@androidworld.nl", ["sander@androidworld.nl"])
+        send_mail("Debugging Forum", "Zucht: " + " ".join(usernames) + " " + text_body, "mailer@androidworld.nl", ["sander@androidworld.nl"])
 
     return {
         'result': True,
