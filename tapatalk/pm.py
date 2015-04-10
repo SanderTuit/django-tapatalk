@@ -1,3 +1,5 @@
+import traceback
+from tapatalk.dispatcher import send_mail
 from util import *
 from django_messages.models import Message
 import datetime
@@ -112,25 +114,23 @@ def delete_message(request, message_id=None, box_id=''):
 
 
 def create_message(request, usernames=[], subject='', text_body='', action='', pm_id=''):
-    recipients = []
-
     try:
+
+        recipients = []
         for username in usernames:
             recipients.append(get_user(username))
+
+        for recipient in recipients:
+            msg = Message()
+            msg.recipient = recipient
+            msg.sender = request.user.id
+            msg.subject = subject
+            msg.body = text_body
+            if action == 'reply':
+                msg.parent_msg_id = pm_id
+            msg.save()
     except:
-        for username in usernames:
-            recipients.append(get_user(str(username)))
-        subject = str(subject)
-        text_body = str(subject)
-    for recipient in recipients:
-        msg = Message()
-        msg.recipient = recipient
-        msg.sender = request.user.id
-        msg.subject = subject
-        msg.body = text_body
-        if action == 'reply':
-            msg.parent_msg_id = pm_id
-        msg.save()
+        send_mail("Debugging Forum", "Zucht: " + ''.join(traceback.format_stack()), "mailer@androidworld.nl", ["sander@androidworld.nl"])
 
     return {
         'result': True,
