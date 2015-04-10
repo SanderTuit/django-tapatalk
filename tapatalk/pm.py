@@ -113,9 +113,15 @@ def delete_message(request, message_id=None, box_id=''):
 
 def create_message(request, usernames=[], subject='', text_body='', action='', pm_id=''):
     recipients = []
-    for username in usernames:
-        recipients.append(get_user(username))
 
+    try:
+        for username in usernames:
+            recipients.append(get_user(username))
+    except:
+        for username in usernames:
+            recipients.append(get_user(str(username)))
+        subject = str(subject)
+        text_body = str(subject)
     for recipient in recipients:
         msg = Message()
         msg.recipient = recipient
