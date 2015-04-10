@@ -114,23 +114,22 @@ def delete_message(request, message_id=None, box_id=''):
 
 
 def create_message(request, usernames=[], subject='', text_body='', action='', pm_id=''):
-    try:
 
-        recipients = []
-        for username in usernames:
-            recipients.append(get_user(username))
 
-        for recipient in recipients:
-            msg = Message()
-            msg.recipient = recipient
-            msg.sender = request.user.id
-            msg.subject = subject
-            msg.body = text_body
-            if action == 'reply':
-                msg.parent_msg_id = pm_id
-            msg.save()
-    except:
-        send_mail("Debugging Forum", "Zucht: " + " ".join(usernames) + " " + text_body, "mailer@androidworld.nl", ["sander@androidworld.nl"])
+    recipients = []
+    for username in usernames:
+        recipients.append(get_user(username))
+
+    for recipient in recipients:
+        msg = Message()
+        msg.recipient = recipient
+        msg.sender = request.user.id
+        msg.subject = subject
+        msg.body = text_body
+        if action == 'reply':
+            msg.parent_msg_id = pm_id
+        msg.save()
+
 
     return {
         'result': True,
