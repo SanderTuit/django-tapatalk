@@ -123,7 +123,7 @@ def create_message(request, usernames=[], subject='', text_body='', action='', p
     for recipient in recipients:
         msg = Message()
         msg.recipient = recipient
-        msg.sender = request.user.id
+        msg.sender = request.user
         msg.subject = subject
         msg.body = text_body
         if action == 'reply':
