@@ -36,6 +36,6 @@ class TapatalkXMLRPCDispatcher(DjangoXMLRPCDispatcher):
                 return func(request, *params, **kwargs)
 
         # Tapatalk sends out bad formatted booleans... *sigh*
-        body = request.raw_post_data.replace('<boolean>true</boolean>', '<boolean>1</boolean>')
+        body = request.body.replace('<boolean>true</boolean>', '<boolean>1</boolean>')
 
         return DjangoXMLRPCDispatcher._marshaled_dispatch(self, body, dispatch_method)
