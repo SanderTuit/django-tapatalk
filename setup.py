@@ -15,7 +15,7 @@ LICENSE = ''
 
 setup(
     name = 'django-tapatalk',
-    version = '0.5.8.90',
+    version = '0.5.8.91',
     description='DjangoBB Tapatalk implementation',
     long_description=README,
     author = 'Sander van de Graaf, Sander Tuit',

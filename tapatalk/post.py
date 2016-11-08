@@ -33,8 +33,8 @@ def get_thread(request, topic_id, start_num=None, last_num=None, return_html=Tru
             start_num = 0
             last_num = 19
 
-        print start_num
-        print last_num
+        from dispatcher import send_mail
+        send_mail("Debugging Forum", str(topic_id) + " " + str(start_num) + " " + str(last_num), "mailer@androidworld.nl", ["sander@androidworld.nl"])
 
         if start_num != last_num:
             if last_num - start_num > 50:
