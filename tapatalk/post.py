@@ -5,48 +5,57 @@ from django.utils.encoding import smart_unicode
 from django.contrib import auth
 
 def get_thread(request, topic_id, start_num=None, last_num=None, return_html=True):
-    Topic.objects.filter(pk=topic_id).update(views=F('views') + 1)
-    topic = Topic.objects.get(pk=topic_id)
-    if request.user.is_authenticated():
-        topic.update_read(request.user)
+    data = {}
+    try:
+        Topic.objects.filter(pk=topic_id).update(views=F('views') + 1)
+        topic = Topic.objects.get(pk=topic_id)
+        if request.user.is_authenticated():
+            topic.update_read(request.user)
 
-    data = {
-        'total_post_num': max(0,topic.post_count),
-        'forum_id': str(topic.forum.id),
-        'forum_title': xmlrpclib.Binary(smart_unicode(topic.forum.name).encode("utf-8")),
-        'topic_id': str(topic.id),
-        'topic_title': xmlrpclib.Binary(smart_unicode(topic.name).encode("utf-8")),
-        'can_reply': True,
-        'posts': [],
-        'is_approved': True,
-        'can_upload': True,
-        'prefix': '',
-        'can_subscribe': False,
-        'is_closed': topic.closed,
-    }
+        data = {
+            'total_post_num': max(0,topic.post_count),
+            'forum_id': str(topic.forum.id),
+            'forum_title': xmlrpclib.Binary(smart_unicode(topic.forum.name).encode("utf-8")),
+            'topic_id': str(topic.id),
+            'topic_title': xmlrpclib.Binary(smart_unicode(topic.name).encode("utf-8")),
+            'can_reply': True,
+            'posts': [],
+            'is_approved': True,
+            'can_upload': True,
+            'prefix': '',
+            'can_subscribe': False,
+            'is_closed': topic.closed,
+        }
 
-    posts = Post.objects.filter(topic=topic).filter(deleted=False)
+        posts = Post.objects.filter(topic=topic).filter(deleted=False)
 
-    if start_num == None and last_num == None:
-        start_num = 0
-        last_num = 19
+        if start_num == None and last_num == None:
+            start_num = 0
+            last_num = 19
 
-    if start_num != last_num:
-        if last_num - start_num > 50:
-            posts = posts[start_num:start_num + 50]
-        else: 
-            posts = posts[start_num:last_num + 1]
-    else:
-        posts = posts[start_num]
+        print start_num
+        print last_num
 
-    for post in posts:
-        post.last_post = None
-        p = post.as_tapatalk()
+        if start_num != last_num:
+            if last_num - start_num > 50:
+                posts = posts[start_num:start_num + 50]
+            else:
+                posts = posts[start_num:last_num + 1]
+        else:
+            posts = posts[start_num]
 
-        if post.user.id == request.user.id:
-            p['can_edit'] = True
+        for post in posts:
+            post.last_post = None
+            p = post.as_tapatalk()
 
-        data['posts'].append(p)
+            if post.user.id == request.user.id:
+                p['can_edit'] = True
+
+            data['posts'].append(p)
+
+    except:
+        from dispatcher import send_mail
+        send_mail("Debugging Forum", str(topic_id) + " " + str(start_num) + " " + str(last_num), "mailer@androidworld.nl", ["sander@androidworld.nl"])
 
     return data
 
