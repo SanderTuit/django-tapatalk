@@ -1,6 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    url(r'^xmlrpc/$', 'tapatalk.views.handle_xmlrpc', name='tapatalk-xmlrpc'),
-    url(r'^mobiquo.php$', 'tapatalk.views.handle_xmlrpc', name='tapatalk-xmlrpc-php'),
-)
+from tapatalk.views import handle_xmlrpc
+
+urlpatterns = [
+    url(r'^xmlrpc/$', handle_xmlrpc, name='tapatalk-xmlrpc'),
+    url(r'^mobiquo.php$', handle_xmlrpc, name='tapatalk-xmlrpc-php'),
+]
